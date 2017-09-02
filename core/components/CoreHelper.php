@@ -21,7 +21,7 @@ class CoreHelper
         $commonConfigLocalPath = MvcKernel::CONFIG_PATH . '/common-local.yaml';
         $routerConfigPath = MvcKernel::CONFIG_PATH . '/routes.yaml';
         $assetsConfigPath = MvcKernel::CONFIG_PATH . '/assets.yaml';
-        if (!file_exists($commonConfigPath) || !file_exists($commonConfigLocalPath)|| !file_exists($routerConfigPath)|| !file_exists($assetsConfigPath)) {
+        if (!file_exists($commonConfigPath) || !file_exists($commonConfigLocalPath) || !file_exists($routerConfigPath) || !file_exists($assetsConfigPath)) {
             throw new BaseException('check config files');
         }
         try {
@@ -29,7 +29,7 @@ class CoreHelper
             $commonLocalConfig = self::parseYamlFile($commonConfigLocalPath);
             $routerConfig = self::parseYamlFile($routerConfigPath);
             $assetsConfig = self::parseYamlFile($assetsConfigPath);
-            return array_merge($commonConfig, $commonLocalConfig,$routerConfig,$assetsConfig);
+            return array_merge($commonConfig, $commonLocalConfig, $routerConfig, $assetsConfig);
         } catch (BaseException $exception) {
             throw new BaseException($exception->getMessage());
         }
@@ -40,7 +40,8 @@ class CoreHelper
      * @return mixed
      * @throws BaseException
      */
-    public static function parseYamlFile($path){
+    public static function parseYamlFile($path)
+    {
         try {
             return yaml_parse(file_get_contents($path));
         } catch (BaseException $exception) {

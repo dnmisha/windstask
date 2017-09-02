@@ -3,7 +3,7 @@ require '../core/autoload.php';
 /**
  * Created by PhpStorm.
  * User: misha
- * Date: 31.08.17
+ * Date: 01.09.17
  * Time: 23:23
  */
 use Mvc\Core\Components\CoreHelper;

@@ -3,7 +3,7 @@
 /**
  * Created by PhpStorm.
  * User: misha
- * Date: 31.08.17
+ * Date: 01.09.17
  * Time: 23:29
  */
 
@@ -23,8 +23,8 @@ class BaseController
     private $params;
     public static $controllerNamespace = '\Controllers';
 
-
     public $layout = 'main';
+
     /**
      * BaseController constructor.
      * @param $actionName
@@ -62,7 +62,8 @@ class BaseController
     /**
      * @return string
      */
-    public function getMethodActionName(){
+    public function getMethodActionName()
+    {
         return 'action' . ucfirst($this->currentAction);;
     }
 
@@ -94,7 +95,7 @@ class BaseController
      */
     public function render($viewName, $params = [])
     {
-        $view = new BaseView($viewName,$this->currentController,$this->currentAction);
+        $view = new BaseView($viewName, $this->currentController, $this->currentAction);
         return $view->render($params);
     }
 }
