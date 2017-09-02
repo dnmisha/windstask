@@ -12,6 +12,7 @@ use Mvc\Core\Base\BaseController;
 use Mvc\Core\Base\BaseException;
 use Mvc\Core\Base\BaseView;
 use Mvc\Core\Base\Db;
+use Mvc\Core\Routing\Request;
 use Mvc\Core\Components\CoreHelper;
 use Mvc\Core\Routing\RouteBuilder;
 
@@ -41,7 +42,13 @@ class MvcKernel
     public $controller = null;
     public $action = null;
     public $view = null;
-
+    /**
+     * @var $request Request
+     */
+    public $request = null;
+    /**
+     * @var $currentRoute RouteBuilder
+     */
     private $currentRoute;
 
     public static $appNamespace = 'Mvc\Application';
@@ -81,6 +88,8 @@ class MvcKernel
             $this->db = new Db($this->config['db']['dbname'], $this->config['db']['username'], $this->config['db']['password']);
             $this->db->init();
 
+            $request = new Request();
+            $this->request = $request->init();
             $this->currentRoute = new RouteBuilder($this->config['routes']);
             /**
              * @var $objectController BaseController

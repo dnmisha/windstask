@@ -13,4 +13,5 @@ return [
     'Mvc/Core/Base/BaseView' => BASE_PATH . '/base/BaseView',
     'Mvc/Core/Base/BaseModel' => BASE_PATH . '/base/BaseModel',
     'Mvc/Core/Routing/RouteBuilder' => BASE_PATH . '/routing/RouteBuilder',
+    'Mvc/Core/Routing/Request' => BASE_PATH . '/routing/Request',
 ];
