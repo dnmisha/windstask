@@ -1,0 +1,5 @@
+routes:
+      '/':
+            controller: main:index
+      '/demo':
+            controller: main:demo

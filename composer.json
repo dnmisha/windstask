@@ -1,0 +1,11 @@
+{
+    "name": "root/mvc",
+    "authors": [
+        {
+            "name": "Misha Vysochin",
+            "email": "mishavysochin@gmail.com"
+        }
+    ],
+    "require": {
+    }
+}
