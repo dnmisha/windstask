@@ -9,6 +9,7 @@
 
 namespace Mvc\Core\Base;
 use Mvc\Core\MvcKernel;
+use PDO;
 
 /**
  * Class BaseModel
@@ -35,6 +36,12 @@ class BaseModel
     }
 
     /**
+     * @return array
+     */
+    public function fields(){
+        return [];
+    }
+    /**
      * @param $data
      * @param bool $skipValidation
      */
@@ -55,6 +62,7 @@ class BaseModel
     /**
      * @param array $params
      * @param null $tableName
+     * @return $this
      */
     public function insertRecord($params = [],$tableName = null){
         if(!empty($params)){
@@ -67,7 +75,8 @@ class BaseModel
             $values  = rtrim($values,',');
             $tableName = ($tableName!==null)?$tableName:$this->currentTable;
             $sql = "INSERT INTO $tableName ($fieldNames) VALUES ($values)";
-            $this->dbConnection->query($sql,$params);
+            $this->query = $this->dbConnection->query($sql,$params);
+            return $this;
         }
     }
 
@@ -83,7 +92,7 @@ class BaseModel
      * @param $select
      * @param null $condition
      * @param array $params
-     * @return mixed
+     * @return BaseModel
      */
     public function getRecord($select, $condition = null, $params = []){
         $sql = "SELECT $select FROM $this->currentTable";
@@ -98,13 +107,37 @@ class BaseModel
      * @return mixed
      */
     public function all(){
-        return $this->query->fetchAll();
+        return $this->query->fetchAll(PDO::FETCH_OBJ);
     }
 
     /**
      * @return mixed
      */
     public function one(){
-        return $this->query->fetch();
+        return $this->query->fetch(PDO::FETCH_OBJ);
+    }
+
+    /**
+     * save data to sb table as new record
+     */
+    public function save(){
+        $fields = $this->fields();
+        $attributes = get_object_vars($this);
+        $params = [];
+        foreach ($fields as $field){
+            if(array_key_exists($field,$attributes)){
+                $params[$field] = $attributes[$field];
+            }
+        }
+        $this->insertRecord($params);
+    }
+
+    /**
+     * @return BaseModel
+     */
+    public static function find($tableName){
+        $model = new self();
+        $model->currentTable = $tableName;
+        return $model;
     }
 }

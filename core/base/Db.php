@@ -86,7 +86,7 @@ class Db
         $statement = $this->pdo->prepare("$sql");
         try {
             if (!empty($params)) {
-                foreach ($params as $key => $value) {
+                foreach ($params as $key => &$value) {
                     $statement->bindParam(":$key", $value);
                 }
             }
