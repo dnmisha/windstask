@@ -11,5 +11,6 @@ return [
     'Mvc/Core/Base/BaseException' => BASE_PATH . '/base/BaseException',
     'Mvc/Core/Base/BaseController' => BASE_PATH . '/base/BaseController',
     'Mvc/Core/Base/BaseView' => BASE_PATH . '/base/BaseView',
+    'Mvc/Core/Base/BaseModel' => BASE_PATH . '/base/BaseModel',
     'Mvc/Core/Routing/RouteBuilder' => BASE_PATH . '/routing/RouteBuilder',
 ];

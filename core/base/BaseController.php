@@ -20,7 +20,8 @@ class BaseController
 
     private $currentAction;
     private $currentController;
-    private $params;
+
+    public $request;
     public static $controllerNamespace = '\Controllers';
 
     public $layout = 'main';
@@ -79,7 +80,6 @@ class BaseController
         $currentControllerClassName = ucfirst($controllerName) . 'Controller';
         $currentControllerPath = MvcKernel::CONTROLLERS_PATH . MvcKernel::$ds . $currentControllerClassName . '.php';
         if (file_exists($currentControllerPath)) {
-            include($currentControllerPath);
             $currentControllerClassName = MvcKernel::$appNamespace . self::$controllerNamespace . '\\' . $currentControllerClassName;
             $controller = new $currentControllerClassName($actionName, $params);
             $controller->currentController = $controllerName;

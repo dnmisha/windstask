@@ -19,8 +19,9 @@ use Mvc\Core\Base\BaseView;
 <body>
 <?= BaseView::renderPartial('header'); ?>
 <div class="container">
-
+    <hr>
     <?= $content; ?>
+    <hr>
 </div>
 
 <?= BaseView::renderPartial('footer'); ?>

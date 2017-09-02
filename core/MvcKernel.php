@@ -28,6 +28,9 @@ class MvcKernel
      * @var array
      */
     public static $classMap = [];
+    /**
+     * @var $app MvcKernel
+     */
     public static $app = null;
     /**
      * @var array
@@ -58,14 +61,12 @@ class MvcKernel
      */
     public function __construct($config = [])
     {
-
         if (!array_key_exists('db', $config) || CoreHelper::arrayKeysExist(['password', 'username', 'dbname'], $config['db'])) {
             throw new \Exception('bad db config');
         }
         if (!array_key_exists('routes', $config)) {
             throw new \Exception('bad routes config');
         }
-
         $this->config = $config;
     }
 
@@ -114,7 +115,8 @@ class MvcKernel
                                 $namespace .= '/' . ucfirst($part);
                             }
                         }
-                        self::$classMap[$namespace] = $directory . self::$ds . str_replace('.php', '', $file);
+                        $name = str_replace('.php', '', $file);
+                        self::$classMap[$namespace.'/'.ucfirst($name)] = $directory . self::$ds . $name;
                     }
                 }
             }
@@ -149,5 +151,9 @@ class MvcKernel
     public function getAssetsConfig()
     {
         return isset($this->config['assets']) ? $this->config['assets'] : [];
+    }
+
+    public function getDb(){
+        return $this->db;
     }
 }

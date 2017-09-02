@@ -14,6 +14,9 @@ namespace Mvc\Core\Base;
  */
 class Db
 {
+    /**
+     * @var $pdo \PDO
+     */
     public $pdo = null;
     private $pdoClass = 'PDO';
     private $dsn;
@@ -64,11 +67,33 @@ class Db
     }
 
     /**
-     * @return mixed
+     * @return \PDO
      */
     protected function createPdoInstance()
     {
         $pdoClass = $this->pdoClass;
         return new $pdoClass($this->dsn, $this->username, $this->password, $this->attributes);
+    }
+
+    /**
+     * @param $sql
+     * @param array $params
+     * @return \PDOStatement
+     * @throws BaseException
+     */
+    public function query($sql, $params = [])
+    {
+        $statement = $this->pdo->prepare("$sql");
+        try {
+            if (!empty($params)) {
+                foreach ($params as $key => $value) {
+                    $statement->bindParam(":$key", $value);
+                }
+            }
+            $statement->execute();
+            return $statement;
+        } catch (BaseException $exception) {
+            throw new BaseException($exception->getMessage());
+        }
     }
 }

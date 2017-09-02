@@ -3,3 +3,5 @@ routes:
             controller: main:index
       '/demo':
             controller: main:demo
+      '/login':
+            controller: user:login

@@ -1,4 +1,4 @@
 .idea/
 vendor/
-/config/common-local.php
 /dayside/
+/config/common-local.yaml
