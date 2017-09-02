@@ -1,4 +1,0 @@
-db:
-        password : '0000'
-        username : root
-        dbname : mvc
