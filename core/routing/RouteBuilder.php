@@ -63,20 +63,48 @@ class RouteBuilder
      */
     public function buildRoute()
     {
-        if (array_key_exists($this->currentPattern, $this->config)) {
-            $route = $this->config[$this->currentPattern];
-            if (array_key_exists('controller', $route) && !empty($route['controller'])) {
-                $appRoute = explode(':', $route['controller']);
-                if (count($appRoute) == 2) {
-                    $this->currentController = $appRoute[0];
-                    $this->currentAction = $appRoute[1];
-                    return BaseController::getController($this->currentController, $this->currentAction, $this->params);
-                } else {
-                    throw new BaseException('Bad path config');
+
+        foreach ( $this->config as $key=> $item){
+            if (preg_match($this->regexPath($key),$this->currentPattern)) {
+                $route = $this->config[$key];
+                if (array_key_exists('controller', $route) && !empty($route['controller'])) {
+                    $appRoute = explode(':', $route['controller']);
+                    if (count($appRoute) == 2) {
+                        $this->currentController = $appRoute[0];
+                        $this->currentAction = $appRoute[1];
+                        $this->params = $this->parseParams($this->currentPattern, $item);
+                        return BaseController::getController($this->currentController, $this->currentAction, $this->params);
+                    } else {
+                        throw new BaseException('Bad path config');
+                    }
                 }
             }
         }
         throw new BaseException('Page not found', 404);
     }
 
+    /**
+     * @param $path
+     * @return string
+     */
+    private function regexPath($path)
+    {
+        return '#' . str_replace([":int:", ":string:"], ["\d+", ".+"], $path) . '$#si';
+    }
+
+    /**
+     * @param $url
+     * @param $item
+     * @return array
+     */
+    public function parseParams($url, $item){
+        $parts = explode('/',$url);
+        $params = [];
+        if(array_key_exists('params',$item)){
+            foreach ($item['params'] as $key=>$param){
+                $params[$key]=array_key_exists($param,$parts)?$parts[$param]:null;
+            }
+        }
+        return $params;
+    }
 }

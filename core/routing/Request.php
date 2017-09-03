@@ -53,4 +53,8 @@ class Request
         }
         return $this->postData;
     }
+
+    public function redirect($url){
+        header("Location:$url");
+    }
 }

@@ -57,6 +57,7 @@ class MvcKernel
     const CONFIG_PATH = BASE_PATH . '/../config';
 
     const APPLICATION_PATH = BASE_PATH . '/../application';
+    const COMPONENTS_PATH = BASE_PATH . '/../components';
     const CONTROLLERS_PATH = self::APPLICATION_PATH . '/controllers';
     const MODELS_PATH = self::APPLICATION_PATH . '/models';
     const VIEWS_PATH = self::APPLICATION_PATH . '/views';
@@ -75,7 +76,13 @@ class MvcKernel
             throw new \Exception('bad routes config');
         }
         $this->config = $config;
+        session_start();
     }
+
+    /**
+     *
+     */
+    public function beforeAction(){ }
 
     /**
      * @throws BaseException
@@ -95,6 +102,7 @@ class MvcKernel
              * @var $objectController BaseController
              */
             $objectController = $this->currentRoute->init();
+            $this->beforeAction();
             $content = $objectController->runAction();
 
             BaseView::renderLayout($objectController->layout, $content);
@@ -120,7 +128,7 @@ class MvcKernel
                     if (strpos($file, '.php') !== false) {
                         $namespace = 'Mvc';
                         foreach (explode('/', $directory) as $part) {
-                            if (in_array($part, ['controllers', 'application', 'models', 'views'])) {
+                            if (in_array($part, ['controllers', 'application', 'models', 'views', 'components'])) {
                                 $namespace .= '/' . ucfirst($part);
                             }
                         }
@@ -138,6 +146,7 @@ class MvcKernel
     public static function autoload($class)
     {
         self::autoloadAppClass(self::APPLICATION_PATH);
+        self::autoloadAppClass(self::COMPONENTS_PATH);
 
         $className = str_replace('\\', '/', $class);
         if (array_key_exists($className, self::$classMap)) {

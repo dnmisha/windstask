@@ -79,6 +79,30 @@ class BaseModel
             return $this;
         }
     }
+    /**
+     * @param array $params
+     * @param null $tableName
+     * @return $this
+     */
+    public function updateRecord($params = [],$condition = null,$tableName = null){
+        if(!empty($params)){
+            $fieldNames = $values = '';
+            foreach ($params as $key=>$value){
+                if($key != 'id'){
+                    $fieldNames.=" $key = :$key,";
+                    $values.=" :$key,";
+                }
+            }
+            $fieldNames  = rtrim($fieldNames,',');
+            $tableName = ($tableName!==null)?$tableName:$this->currentTable;
+            $sql = "UPDATE $tableName SET $fieldNames";
+            if($condition !== null){
+                $sql.= $condition;
+            }
+            $this->query = $this->dbConnection->query($sql,$params);
+            return $this;
+        }
+    }
 
     /**
      * @param $sql
@@ -97,7 +121,7 @@ class BaseModel
     public function getRecord($select, $condition = null, $params = []){
         $sql = "SELECT $select FROM $this->currentTable";
         if($condition !==null){
-            $sql .= " WHERE $condition";
+            $sql .= " $condition";
         }
         $this->query = $this->dbConnection->query($sql,$params);
         return $this;
@@ -130,6 +154,20 @@ class BaseModel
             }
         }
         $this->insertRecord($params);
+    }
+    /**
+     * save data to sb table as new record
+     */
+    public function update($condition = null){
+        $fields = $this->fields();
+        $attributes = get_object_vars($this);
+        $params = [];
+        foreach ($fields as $field){
+            if(array_key_exists($field,$attributes)){
+                $params[$field] = $attributes[$field];
+            }
+        }
+        $this->updateRecord($params,$condition);
     }
 
     /**
