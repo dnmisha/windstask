@@ -1,11 +1,14 @@
 {
-  "name": "root/mvc",
+  "name": "dnmisha/mvc-skeleton",
+  "description": "Simple mvc framework",
   "authors": [
     {
       "name": "Misha Vysochin",
       "email": "mishavysochin@gmail.com"
     }
   ],
+  "minimum-stability": "dev",
   "require": {
+    "php": ">=5.3.0"
   }
 }
