@@ -4,8 +4,7 @@ Simple MVC sceleton
 
 ## Instructions to install
 
-Edit your project's `composer.json` file to require `"dnmisha/mvc-skeleton": "*"` 
-**Or** run this command in your command line:
+Clone repository
 ```bash
-composer require dnmisha/mvc-skeleton
+git clone https://github.com/dnmisha/mvc-skeleton.git 
 ``` 
