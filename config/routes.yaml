@@ -5,3 +5,7 @@ routes:
             controller: main:demo
       '/login':
             controller: user:login
+      '/task/:int:':
+                        controller: task:index
+                        params:
+                                id: 2

@@ -12,7 +12,10 @@
             <a class="navbar-brand" href="/"><?=MvcKernel::$app->getAppName();?></a>
         </div>
         <ul class="nav navbar-nav pull-right">
-            <li><a href="">Home</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/task/1">Task one</a></li>
+            <li><a href="/task/2">Task two</a></li>
+            <li><a href="/task/3">Task three</a></li>
         </ul>
     </div>
 </nav>

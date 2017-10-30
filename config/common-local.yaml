@@ -1,4 +1,4 @@
 db:
     password : '0000'
     username : 'root'
-    dbname : 'mvc'
+    dbname : 'seven_winds'
