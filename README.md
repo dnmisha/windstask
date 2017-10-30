@@ -1,51 +1,18 @@
-# mvc-skeleton
-
-Simple MVC sceleton
-
+ 
 ## Instructions to install
 
-Clone repository
+1. Clone repository
 ```bash
-git clone https://github.com/dnmisha/mvc-skeleton.git 
+git clone https://github.com/dnmisha/windstask.git
 ``` 
-## Route example routes.yaml
+2. Create empty database
+execute sql file in folder /dump
 
+3. Setup db connection in common-local.yaml
 ```yaml
-routes:
-      '/':
-            controller: main:index
-      '/demo':
-            controller: main:demo
-      '/login':
-            controller: user:login
-      '/path1/path2/:int:':
-                        controller: name_controller:name_action
-                        params:
-                                id: 3 #index of your dynamic param
+db:
+    password : 'password'
+    username : 'username'
+    dbname : 'dbname'
 ```
-
-## Processing request 
-component MvcKernel::$app->request
-
-### check if request is post
-
-```php
-MvcKernel::$app->request->isPost()
-```
-
-### redirect user to url
-
-```php
- MvcKernel::$app->request->redirect('/path');
-```
-### to get post/get variable
-if args sre empty return all post data
-```php
-MvcKernel::$app->request->post()
-```
-if method receive variableName or/and defaultValue will return some variable with/or default value if it does't exist
-
-The same solution for GET
-```php
-MvcKernel::$app->request->get()
-```
+3. Start your localhost
